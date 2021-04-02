@@ -1,0 +1,96 @@
+﻿@model IEnumerable<Lemon_Bar.Models.Item>
+
+@{
+    ViewData["Title"] = "Inventory List";
+}
+
+<html>
+<body>
+    <h1><b>Current Inventory List</b></h1>
+
+    @{
+        if (TempData.Peek("missing") != null)
+        {
+            <h4 style="color: red"><strong> Please Add: @TempData.Peek("missing") </strong></h4>
+        }
+        <hr />
+        if (TempData.Peek("LowQty") != null)
+        {
+            <h4 style="color: red"><strong>@TempData.Peek("LowQty")</strong></h4>
+        }
+        
+    }
+
+    <ul>
+        <li> <a asp-action="Create" asp-route-type="Mixers"> Add Mixers</a> </li>
+        <li> <a asp-action="Create" asp-route-type="Garnish"> Add Garnish</a> </li>
+    </ul>
+
+    @*<table class="table">*@
+    <table class="styled-table" id="invTable">
+        <thead>
+            <tr>
+                <th onclick="sortTable(0)">
+                    @Html.DisplayNameFor(model => model.ItemName)
+                </th>
+                <th onclick="sortTable(1)">
+                    @Html.DisplayNameFor(model => model.TotalCost)
+                </th>
+                <th onclick="sortTable(2)">
+                    @Html.DisplayNameFor(model => model.Quantity)
+                </th>
+                <th onclick="sortTable(3)">
+                    @Html.DisplayNameFor(model => model.UnitCost)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Units)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Garnish)
+                </th>
+                @*<th>
+                        @Html.DisplayNameFor(model => model.UserNavigation)
+                    </th>*@
+                <th>***   Actions   ***</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                 
+                    double newQuantity = Math.Round(item.Quantity, 2);
+                
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.ItemName)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.TotalCost)
+                    </td>
+                    <td>
+                        @newQuantity
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.UnitCost)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Units)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Garnish)
+                    </td>
+                    @*<td>
+                            @Html.DisplayFor(modelItem => item.UserNavigation.Id)
+                        </td>*@
+                    <td>
+                        <a asp-action="Edit" asp-route-id="@item.Id">Add More</a> |
+                        @*<a asp-action="Details" asp-route-id="@item.Id">Details</a> |*@
+                        <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+
+</body>
+</html>

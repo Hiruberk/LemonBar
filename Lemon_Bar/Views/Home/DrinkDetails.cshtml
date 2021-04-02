@@ -1,0 +1,77 @@
+﻿@model Drink
+
+
+<h2>@Model.strDrink</h2>
+
+@{List<string> ing = new List<string>();
+    if (!String.IsNullOrEmpty(Model.strIngredient1)) { ing.Add(Model.strIngredient1); }
+    if (!String.IsNullOrEmpty(Model.strIngredient2)) { ing.Add(Model.strIngredient2); }
+    if (!String.IsNullOrEmpty(Model.strIngredient3)) { ing.Add(Model.strIngredient3); }
+    if (!String.IsNullOrEmpty(Model.strIngredient4)) { ing.Add(Model.strIngredient4); }
+    if (!String.IsNullOrEmpty(Model.strIngredient5)) { ing.Add(Model.strIngredient5); }
+    if (!String.IsNullOrEmpty(Model.strIngredient6)) { ing.Add(Model.strIngredient6); }
+    if (Model.strIngredient7 != null) { if (!String.IsNullOrEmpty(Model.strIngredient7.ToString())) { ing.Add(Model.strIngredient7.ToString()); } }
+
+}
+
+@{List<string> mea = new List<string>();
+    if (!String.IsNullOrEmpty(Model.strMeasure1)) { mea.Add(Model.strMeasure1); } else { mea.Add("Fill with"); }
+    if (!String.IsNullOrEmpty(Model.strMeasure2)) { mea.Add(Model.strMeasure2); } else { mea.Add("Fill with"); }
+    if (!String.IsNullOrEmpty(Model.strMeasure3)) { mea.Add(Model.strMeasure3); } else { mea.Add("Fill with"); }
+    if (!String.IsNullOrEmpty(Model.strMeasure4)) { mea.Add(Model.strMeasure4); } else { mea.Add("Fill with"); }
+    if (!String.IsNullOrEmpty(Model.strMeasure5)) { mea.Add(Model.strMeasure5); } else { mea.Add("Fill with"); }
+    if (!String.IsNullOrEmpty(Model.strMeasure6)) { mea.Add(Model.strMeasure6); } else { mea.Add("Fill with"); }
+    if (Model.strMeasure7 != null) { if (!String.IsNullOrEmpty(Model.strMeasure7.ToString())) { mea.Add(Model.strMeasure7.ToString()); } }
+
+}
+
+<h3>Ingredients:</h3>
+<ul>
+    @{ int index = 0;
+        foreach (string i in ing)
+        {
+            <li>@i: @mea[index]</li>
+            index++;
+        }
+    }
+</ul>
+
+<p>@Model.strInstructions</p>
+
+<img src="@Model.strDrinkThumb" alt="@Model.strImageAttribution" style="height: 315px; width: auto; border: double;" />
+
+@{string url = @Model.strVideo;
+    if (url != null)
+    {
+        string URL = url.Replace("watch?v=", "embed/");
+        <iframe width="560" height="315" src=@URL frameborder="0" allowfullscreen align="right"></iframe>
+    }
+}
+
+<br />
+<br />
+
+<form asp-action="Create" asp-controller="DrinkSales" >
+    <label>Select quantity to make</label>
+    <select name="quantity">
+        <option  value=1>1</option>
+        <option value=2>2</option>
+        <option value=3>3</option>
+        <option value=4>4</option>
+        <option value=5>5</option>
+        <option value=6>6</option>
+        <option value=7>7</option>
+        <option value=8>8</option>
+        <option value=9>9</option>
+        <option value=10>10</option>
+        <option value=15>15</option>
+        <option value=20>20</option>
+    </select>
+    <input type="hidden" name="id" value="@Model.idDrink" />
+    <input type="submit" value="Make This Drink!" class="btn1" />
+</form>
+
+
+
+
+

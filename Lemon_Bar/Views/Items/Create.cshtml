@@ -1,0 +1,86 @@
+﻿@model Lemon_Bar.Models.Item
+
+@{
+    ViewData["Title"] = "Create";
+    string ingType = TempData["IngredType"] as string;
+}
+<html>
+<body>
+    <h1><b>Add an Item to Inventory</b></h1>
+
+
+
+    <h4></h4>
+    <hr />
+    <div class="row">
+        <div class="col-md-5">
+            <form asp-action="Create">
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                <div class="form-group">
+                    <label asp-for="ItemName" class="control-label"></label>
+                    @*<input asp-for="ItemName" class="form-control" />*@
+
+                    <!--Replaced the ItemName input field with a drop-down list-->
+                    <select asp-for="ItemName" class="form-control" asp-items="ViewBag.Ingredients"></select>
+                    <span asp-validation-for="ItemName" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="TotalCost" class="control-label"></label>
+                    <input asp-for="TotalCost" class="form-control" />
+                    <span asp-validation-for="TotalCost" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="Quantity" class="control-label"></label>
+                    <input asp-for="Quantity" class="form-control" min=".5" />
+                    <span asp-validation-for="Quantity" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    @*<label asp-for="UnitCost" class="control-label"></label>*@
+
+                    <!--Made UnitCost hidden field.  We will calculate this in the controller-->
+                    <input asp-for="UnitCost" class="form-control" hidden />
+                    @*<span asp-validation-for="UnitCost" class="text-danger"></span>*@
+                </div>
+                <div class="form-group">
+                    <label asp-for="Units" class="control-label"></label>
+                    @*<input asp-for="Units" class="form-control" />*@
+
+                    <!--Replaced the Units input field with the following drop-down list-->
+                <select asp-for="Units" class="form-control">
+                    @if (ingType == "Garnish")
+                    {
+                        <option value="each">each</option>
+                    }
+                    else
+                    {
+                        <option value="fifth">fifth</option>
+                        <option value="Liter">Liter</option>
+                        <option value="1/2Gallon">1/2Gallon</option>
+                        <option value="Gallon">Gallon</option>
+                    }
+                </select>
+                    <span asp-validation-for="Units" class="text-danger"></span>
+                </div>
+                <div class="form-group form-check">
+                    <label class="form-check-label">
+                        <!--Made Garnish hidden.  We will force the value in the controller-->
+                        <input class="form-check-input" asp-for="Garnish" hidden/> @*@Html.DisplayNameFor(model => model.Garnish)*@
+                    </label>
+                </div>
+                <div class="form-group">
+                    <input type="submit" value="Create" class="btn1" />
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <div>
+        <a asp-action="Index">Back to List</a>
+    </div>
+
+    @section Scripts {
+        @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    }
+
+</body>
+</html>

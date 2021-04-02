@@ -1,0 +1,53 @@
+﻿@model Rootobject
+@using Microsoft.AspNetCore.Identity
+@inject SignInManager<IdentityUser> SignInManager
+@inject UserManager<IdentityUser> UserManager
+
+<html>
+<body>
+    <br />
+    <h2 class="lemon-brand" align="center">Lemon Bar</h2>
+    <br />
+    <h3 align="center">Welcome to Lemon Bar, Cocktail Artisan!</h3>
+    <h3 align="center">This app is here to help you keep track of your bar's inventory </h3>
+    <br />
+    <h2 align="center">AND</h2>
+    <br />
+    <h3 align="center">Help you to pick new cocktails to serve based upon what you have in stock!</h3>
+    <br />
+    <h2 align="center">AND</h2>
+    <br />
+    <h3 align="center">Tell you how much that cocktail costs you to make, how much you should sell it for and keeps track of your sales!!</h3>
+    <br /><br />
+    <form align="center" asp-action="SearchByName" asp-controller="Home">
+        <h3><label>Search for a cocktail by name!</label></h3>
+        <input type="text" name="cocktail" />
+        <input type="submit" class="btn1" />
+    </form>
+
+    <br />
+    @if (SignInManager.IsSignedIn(User))
+    {
+    <div class="btn1">
+        <h4> <a asp-action="SearchByInventory" asp-controller="Items">Search for a cocktail using ingredients from your inventory!</a> </h4>
+    </div>
+    <br />  <br />
+    <div class="btn1">
+        <h4 align="center"> <a asp-action="GetMood" asp-controller="Home">Make a random drink based on your mood!</a> </h4>
+    </div>
+    <br /><br />
+    <div class="btn1">
+        <h4 align="center"> <a asp-action="SurplusResults" asp-controller="Items"> Click here to see recipes based on your surplus inventory</a></h4>
+    </div>
+    <br />  <br />
+    <div class="btn1">
+        <h4 align="center"> <a asp-action="RecipeList" asp-controller="Items"> Click here to see popular recipes you can make from your inventory</a></h4>
+    </div>
+        }
+        else
+        {
+    <br />  <br />
+    <h4 align="center">If you would like to start tracking your inventory please <a asp-area="Identity" asp-page="/Account/Login">Login</a> or <a asp-area="Identity" asp-page="/Account/Register">Register</a> an account with us! </h4>
+        }
+</body>
+</html>
